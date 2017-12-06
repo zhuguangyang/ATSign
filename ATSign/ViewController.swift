@@ -81,11 +81,14 @@ class ViewController: NSViewController {
                     signUrl = dataObj?["cpServer"] as? String ?? signUrl
                     self.logging("登录成功")
                 } else {
+                    sleep(1)
                     self.tokenLogin()
                     self.logging("登录失败")
                 }
                 
             }) { (error) in
+                sleep(1)
+                self.tokenLogin()
                 self.logging("登录失败")
             }
             
@@ -97,7 +100,7 @@ class ViewController: NSViewController {
         }
         
         queque.async {
-            sleep(5)
+            sleep(10)
             self.signIn()
         }
         
@@ -111,11 +114,13 @@ class ViewController: NSViewController {
             if dataObj != nil {
                 signUrl = dataObj?["cpServer"] as? String ?? signUrl
             } else {
+                sleep(1)
                 self.tokenLogin()
                 
             }
             
         }) { (error) in
+            sleep(1)
             self.tokenLogin()
         }
         
