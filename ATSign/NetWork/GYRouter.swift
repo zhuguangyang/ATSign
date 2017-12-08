@@ -161,8 +161,8 @@ enum GYRouter: URLRequestConvertible {
 //                mutableURLRequest.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Mobile/14E304", forHTTPHeaderField: "User-Agent")
 //                parm["accessToken"] = "d769cccd-ce76-4122-95b0-0f1d33406976"
 //                mutableURLRequest.httpBody =
-                let jsonStr = parm["checkout"] as! String
-                let postData = jsonStr.data(using: String.Encoding.utf8)!
+                let jsonStr = parm["checkout"] as? String
+                let postData = jsonStr?.data(using: String.Encoding.utf8)!
                 mutableURLRequest.httpBody = postData
 //                return try Alamofire.URLEncoding.httpBody.encode(mutableURLRequest, with: parm)
                 return mutableURLRequest

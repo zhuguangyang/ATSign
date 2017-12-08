@@ -74,7 +74,6 @@ class ViewController: NSViewController {
         let queque = DispatchQueue(label: "com.gy")
         
         queque.async {
-            
             GYNetWorking.default.requestJson(GYRouter.tokenLogin(parameters: ["deviceInfo":["platform": "ios", "version":"10.3.3", "manufactor":"apple"]]), sucess: { (data) in
                 let dataObj = data["data"] as? [String:AnyObject]
                 if dataObj != nil {
@@ -177,6 +176,7 @@ class ViewController: NSViewController {
             Print(error)
             self.logging(error.localizedDescription)
             self.logging("faliure")
+            self.signIn()
         }
         
     }
