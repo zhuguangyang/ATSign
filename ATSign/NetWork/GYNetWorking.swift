@@ -203,14 +203,14 @@ extension GYNetWorking {
         } else {
             DispatchQueue.main.async {
                 
-                if response.result.debugDescription.contains("Code=-1001") {
-                    
-
-                } else {
-                    Print(response.value)
-                }
-//                response.result
-                Print(response.result.error?.localizedDescription)
+//                if response.result.debugDescription.contains("Code=-1001") {
+//
+//
+//                } else {
+//                    Print(response.value)
+//                }
+////                response.result
+//                Print(response.result.error?.localizedDescription)
                 if response.result.error != nil {
                 failure(response.result.error!)
                 

@@ -98,10 +98,10 @@ class ViewController: NSViewController {
             self.ShowInfo()
         }
         
-        queque.async {
-            sleep(10)
-            self.signIn()
-        }
+//        queque.async {
+//            sleep(10)
+//
+//        }
         
     }
 
@@ -130,7 +130,7 @@ class ViewController: NSViewController {
     GYNetWorking.default.requestJson(GYRouter.ShowInfo(parameters: [:]), sucess: { (result) in
 
             let data = result["data"] as? [String:AnyObject]//
-            self.showModel.coWorkOff = data!["coWorkOff"] as? String ?? ""
+            self.showModel.coWorkOff = data?["coWorkOff"] as? String ?? ""
             self.showModel.currentDate = data?["currentDate"] as? String ?? ""
             self.showModel.currentDateDesc = data?["currentDateDesc"]as? String ?? ""
             self.showModel.currentTime = data?["currentTime"] as? String ?? ""
@@ -230,6 +230,8 @@ class ViewController: NSViewController {
         
         signoutParams = ["checkout": dicToJsonString(ss)!]
 //        signoutParams = ss
+        
+        self.signIn()
     }
     
     fileprivate func logging(_ str:String) {
