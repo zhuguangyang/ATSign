@@ -14,7 +14,8 @@ var signUrl = "https://cpnd-hz.winployee.com"
 var ShowInfo = "\(signUrl)/api/att/coGetInfo.json" // 签到界面
 var SignIn = "\(signUrl)/api/att/clockout.json" // 签到
 var SignOut = "\(signUrl)/api/att/clockout.json" // 签退
-let accessToken = "nil"
+let accessToken = "a3f0ecd9-0f0f-4903-a9a8-69da58c9f90"
+//a3f0ecd9-0f0f-4903-a9a8-69da58c9f908
 
 struct schedulesModel {
     var attCoSol: String = ""

@@ -71,6 +71,10 @@ class ViewController: NSViewController {
 //        ShowInfo()
         */
         
+        if !compareTime() {
+            self.logging("时间都过了,还来干吗")
+            return
+        }
         let queque = DispatchQueue(label: "com.gy")
         
         queque.async {
@@ -98,10 +102,6 @@ class ViewController: NSViewController {
             self.ShowInfo()
         }
         
-//        queque.async {
-//            sleep(10)
-//
-//        }
         
     }
 
@@ -199,6 +199,16 @@ class ViewController: NSViewController {
         formatter.pmSymbol = "下午"
         formatter.dateFormat = "aaa";
         return formatter.string(from: Date())
+    }
+    
+    private func compareTime() -> Bool{
+        
+        let formatter = DateFormatter()
+        formatter.amSymbol = "上午"
+        formatter.pmSymbol = "下午"
+        formatter.dateFormat = "HH";
+
+        return Int(formatter.string(from: Date()))! <= 9
     }
     
     fileprivate func params() {
