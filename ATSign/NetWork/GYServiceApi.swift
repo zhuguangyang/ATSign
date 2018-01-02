@@ -43,13 +43,13 @@ class GYServiceApi: NSObject {
     /// - Returns: return value description
     internal class func SignIn() -> String {
         
-        return "\(signUrl)/api/att/clockout.json?accessToken=\(accessToken)"
+        return "\(signUrl)/api/att/clock.json?accessToken=\(accessToken)"
     }
     
     /// - Returns: return value description
     internal class func SignOut() -> String {
         
-        return "\(signUrl)/api/att/clockout.json"
+        return "\(signUrl)/api/att/clock.json"
     }
     
     

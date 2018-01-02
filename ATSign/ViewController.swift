@@ -71,7 +71,7 @@ class ViewController: NSViewController {
 //        ShowInfo()
         */
         
-        if !compareTime() {
+        if compareTime() {
             self.logging("时间都过了,还来干吗")
             return
         }
@@ -220,7 +220,7 @@ class ViewController: NSViewController {
         let sp: [String: String] = ["attCoSol": schedule.attCoSol, "enableOffEndTime": schedule.enableOffEndTime , "enableOffStartTime": schedule.enableOffStartTime, "enableOnEndTime": schedule.enableOnEndTime , "enableOnStartTime": schedule.enableOnStartTime , "scheduleId": schedule.scheduleId, "scheduleName": schedule.scheduleName , "workOnTime": schedule.workOnTime]
         let index = Int(arc4random()%5)
         let model = cordinations[index]
-        let lp: [String: String] = ["latitude": model.latitude, "longitude": model.longitude, "success": "1"]
+        let lp: [String: String] = ["latitude": model.latitude, "longitude": model.longitude, "success": "1","speed":"-1","accuracy":"65"]
         
         var fp: [String: String] = ["onOrOff": "off", "attCoSol": "gps"]
         switch load() {

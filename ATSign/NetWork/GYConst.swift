@@ -12,8 +12,8 @@ let AppLogin = "http://www.winployee.com/cw-ms/user/login.json" // 登陆
 let TokenLogin = "http://www.winployee.com/cw-ms/user/server/update.json" // Token登陆
 var signUrl = "https://cpnd-hz.winployee.com"
 var ShowInfo = "\(signUrl)/api/att/coGetInfo.json" // 签到界面
-var SignIn = "\(signUrl)/api/att/clockout.json" // 签到
-var SignOut = "\(signUrl)/api/att/clockout.json" // 签退
+var SignIn = "\(signUrl)/api/att/clock.json" // 签到
+var SignOut = "\(signUrl)/api/att/clock.json" // 签退
 let accessToken = "a3f0ecd9-0f0f-4903-a9a8-69da58c9f908"
 //a3f0ecd9-0f0f-4903-a9a8-69da58c9f908
 
