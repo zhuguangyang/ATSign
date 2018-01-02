@@ -208,7 +208,7 @@ class ViewController: NSViewController {
         formatter.pmSymbol = "下午"
         formatter.dateFormat = "HH";
 
-        return Int(formatter.string(from: Date()))! <= 9
+        return Int(formatter.string(from: Date()))! <= 9  || Int(formatter.string(from: Date()))! >= 18
     }
     
     fileprivate func params() {
