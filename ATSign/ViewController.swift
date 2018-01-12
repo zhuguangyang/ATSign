@@ -71,7 +71,7 @@ class ViewController: NSViewController {
 //        ShowInfo()
         */
         
-        if compareTime() {
+        if !compareTime() {
             self.logging("时间都过了,还来干吗")
             return
         }
