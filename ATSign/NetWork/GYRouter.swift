@@ -68,7 +68,7 @@ enum GYRouter: URLRequestConvertible {
         case .compactInfo,.isCanApply,.getMyInviter,.getInviterInfo,.getUserApplyHistory,.getUserApplyStateByID:
             return .post
         case .tokenLogin,.ShowInfo:
-            return .get
+            return .post
         }
         
     }
@@ -129,10 +129,14 @@ enum GYRouter: URLRequestConvertible {
             mutableURLRequest.setValue("\(token)", forHTTPHeaderField: "usertoken")
         }
         
-        mutableURLRequest.setValue("text/html;charset=UTF-8", forHTTPHeaderField: "Content-Type")
-        
-//        mutableURLRequest.setValue("com.ozner", forHTTPHeaderField: "clientid")
-//        
+        mutableURLRequest.setValue("application/x-www-form-urlencoded;charset=utf-8",forHTTPHeaderField: "Content-Type")
+        mutableURLRequest.setValue("X-Requested-With", forHTTPHeaderField: "xmlHttpRequest")
+
+        mutableURLRequest.setValue("User-Agent", forHTTPHeaderField: "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36d")
+        mutableURLRequest.setValue("Referer", forHTTPHeaderField: "https://kyfw.12306.cn/otn/login/init")
+        mutableURLRequest.setValue("Accept", forHTTPHeaderField: "*/*")
+
+//
 //        mutableURLRequest.setValue("1.0", forHTTPHeaderField: "appversion")
         mutableURLRequest.timeoutInterval = 10
         switch self {

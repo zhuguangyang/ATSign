@@ -19,7 +19,7 @@ class GYServiceApi: NSObject {
     
     #if DEBUG
 //    static var host: String = "http://192.168.173.22:2017"
-    static var host: String = "http://www.winployee.com/cw-ms/user/server/update.json"
+    static var host: String = "https://kyfw.12306.cn/passport/captcha/captcha-image?"
     #else
     static var host: String = "http://www.winployee.com/cw-ms/user/server/update.json"
     #endif
@@ -29,8 +29,9 @@ class GYServiceApi: NSObject {
     ///
     /// - Returns: return value description
     internal class func tokenLogin() -> String {
-    
-        return "\(host)"
+        let param = CaptchaImageParam().ToGetParams()
+
+        return "\(host)\(param)"
     }
     
     ///
@@ -164,4 +165,16 @@ class GYServiceApi: NSObject {
     }
 
     
+}
+
+
+struct CaptchaImageParam {
+    var login_site:String = "E"
+    var module:String = "login"
+    var rand:String = "sjrand"
+    
+    func ToGetParams()->String{
+        let random = CGFloat(Float(arc4random()) / Float(UINT32_MAX))//0~1
+        return "login_site=\(login_site)&module=\(module)&rand=\(rand)&" + random.description
+    }
 }

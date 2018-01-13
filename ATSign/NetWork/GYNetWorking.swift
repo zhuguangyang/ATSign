@@ -50,6 +50,7 @@ enum GYRequestSerializer {
 }
 
 typealias GYHttpRequestSuccess = (AnyObject) -> Void
+typealias GYHttpRequestSuccessData = (Data) -> Void
 
 typealias GYHttpRequestFailed = (Error) -> Void
 
@@ -116,7 +117,25 @@ extension GYNetWorking {
 extension GYNetWorking {
     
     
+  func requestData(_ urlRequest: URLRequestConvertible, sucess:@escaping GYHttpRequestSuccessData,failure: @escaping GYHttpRequestFailed) {
     
+    let responseJSON: (DataResponse<Data>) -> Void = { [weak self]  (response:DataResponse<Data>) in
+        switch response.result {
+        case .success(let data):
+            sucess(data)
+            break
+        default:
+            break
+        }
+    }
+    
+    let manager = AlamofireManager.default
+    //        此处设置超时无效
+    //                manager.session.configuration.timeoutIntervalForRequest = 3
+    let dataRequest =  manager.request(urlRequest)
+        .responseData(queue: nil, completionHandler: responseJSON)
+        
+    }
     /// 自动校验 返回Json格式
     ///
     /// - Parameters:
