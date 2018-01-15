@@ -14,6 +14,7 @@ class ViewController: NSViewController {
 
     @IBOutlet weak var textView: NSScrollView!
     
+    @IBOutlet weak var imageView: NSImageView!
     @IBOutlet var attextView: NSTextView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,7 @@ class ViewController: NSViewController {
             print(data)
             DispatchQueue.main.async {
                 let image = NSImage(data: data)
-
+                
                 let imageView = NSImageView(frame: NSRect(x: 0, y: 0, width: 200, height: 200));
                 imageView.image = image
                 self.view.addSubview(imageView)

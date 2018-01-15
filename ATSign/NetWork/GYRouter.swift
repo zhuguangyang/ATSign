@@ -144,7 +144,7 @@ enum GYRouter: URLRequestConvertible {
         case .login(var parm),.register(var parm),.getPhoneCode(parameters: var parm),.submitUserInfoDetaile(parameters: var parm),.submitApplication(parameters: var parm),.getUserInfo(parameters: var parm),.getUserApplyState(parameters: var parm),.compactInfo(parameters: var parm),.getMyInviter(var parm),.getInviterInfo(parameters: var parm),.getUserApplyHistory(parameters: var parm),.getUserApplyStateByID(parameters: var parm),.isCanApply(parameters: var parm):
             do {
                 
-                parm["accessToken"] = accessToken
+//                parm["accessToken"] = accessToken
 
                 return try Alamofire.URLEncoding().encode(mutableURLRequest, with: parm)
             } catch  {
@@ -153,7 +153,7 @@ enum GYRouter: URLRequestConvertible {
         case .tokenLogin(parameters: var parm),.ShowInfo(parameters: var parm),.SignOut(parameters: var parm):
             do {
                 
-                parm["accessToken"] = accessToken
+//                parm["accessToken"] = accessToken
                 
                 return try Alamofire.URLEncoding().encode(mutableURLRequest, with: parm)
             } catch  {
