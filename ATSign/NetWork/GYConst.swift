@@ -14,7 +14,7 @@ var signUrl = "https://cpnd-hz.winployee.com"
 var ShowInfo = "\(signUrl)/api/att/coGetInfo.json" // 签到界面
 var SignIn = "\(signUrl)/api/att/clock.json" // 签到
 var SignOut = "\(signUrl)/api/att/clock.json" // 签退
-let accessToken = "a3f0ecd9-0f0f-4903-a9a8-69da58c9f908"
+let accessToken = "9220d768-32fc-4962-b1d4-347328c30223"
 //a3f0ecd9-0f0f-4903-a9a8-69da58c9f908
 
 struct schedulesModel {
