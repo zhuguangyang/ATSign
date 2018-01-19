@@ -17,7 +17,7 @@ class ViewController: NSViewController {
     @IBOutlet var attextView: NSTextView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        Print(load())
+//        Print(load())
         /*
         let semaphore = DispatchSemaphore(value: 2)
         let queue = DispatchQueue(label: "com.leo.concurrentQueue", qos: .default, attributes: .concurrent)
@@ -71,14 +71,14 @@ class ViewController: NSViewController {
 //        ShowInfo()
         */
         
-        if !compareTime() {
-            self.logging("时间都过了,还来干吗")
-            return
-        }
+//        if !compareTime() {
+//            self.logging("时间都过了,还来干吗")
+//            return
+//        }
         let queque = DispatchQueue(label: "com.gy")
         
         queque.async {
-            GYNetWorking.default.requestJson(GYRouter.tokenLogin(parameters: ["deviceInfo":["platform": "ios", "version":"10.3.3", "manufactor":"apple"]]), sucess: { (data) in
+            GYNetWorking.default.requestJson(GYRouter.tokenLogin(parameters: ["loginUserDTO.user_name":"745756619@qq.com","":""]), sucess: { (data) in
                 let dataObj = data["data"] as? [String:AnyObject]
                 if dataObj != nil {
                     signUrl = dataObj?["cpServer"] as? String ?? signUrl

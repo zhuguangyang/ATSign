@@ -68,7 +68,7 @@ enum GYRouter: URLRequestConvertible {
         case .compactInfo,.isCanApply,.getMyInviter,.getInviterInfo,.getUserApplyHistory,.getUserApplyStateByID:
             return .post
         case .tokenLogin,.ShowInfo:
-            return .get
+            return .post
         }
         
     }

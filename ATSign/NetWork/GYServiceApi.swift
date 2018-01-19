@@ -19,7 +19,7 @@ class GYServiceApi: NSObject {
     
     #if DEBUG
 //    static var host: String = "http://192.168.173.22:2017"
-    static var host: String = "http://www.winployee.com/cw-ms/user/server/update.json"
+    static var host: String = "https://kyfw.12306.cn/otn/login/loginAysnSuggest"
     #else
     static var host: String = "http://www.winployee.com/cw-ms/user/server/update.json"
     #endif
