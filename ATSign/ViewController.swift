@@ -14,98 +14,28 @@ class ViewController: NSViewController {
 
     @IBOutlet weak var textView: NSScrollView!
     
+    @IBOutlet weak var imageView: NSImageView!
     @IBOutlet var attextView: NSTextView!
     override func viewDidLoad() {
         super.viewDidLoad()
-//        Print(load())
-        /*
-        let semaphore = DispatchSemaphore(value: 2)
-        let queue = DispatchQueue(label: "com.leo.concurrentQueue", qos: .default, attributes: .concurrent)
         
-        queue.sync {
-//            semaphore.wait()
-            GYNetWorking.default.requestJson(GYRouter.tokenLogin(parameters: ["deviceInfo":["platform": "ios", "version":"10.3.3", "manufactor":"apple"]]), sucess: { (data) in
-                print(data)
-                sleep(10)
-                DispatchQueue.main.async {
-//                    semaphore.signal()
-                    self.ShowInfo()
-                }
+        GYNetWorking.default.requestData(GYRouter.tokenLogin(parameters: [:]), sucess: { (data) in
+            print(data)
+            DispatchQueue.main.async {
+                let image = NSImage(data: data)
                 
+                let imageView = NSImageView(frame: NSRect(x: 0, y: 0, width: 200, height: 200));
+                imageView.image = image
+                self.view.addSubview(imageView)
+
+            }
+            
             }) { (error) in
-                print(error)
+ 
             }
             
         }
-        
-//        queue.sync {
-//            semaphore.wait()
-//            GYNetWorking.default.requestJson(GYRouter.ShowInfo(parameters: [:]), sucess: { (data) in
-//                print(data)
-//                DispatchQueue.main.async {
-//                    semaphore.signal()
-//                }
-//            }) { (error) in
-//                print(error)
-//            }
-//
-//        }
-        
-        print("ofkkkkk")
-        
-//        DispatchQueue.global().async(flags: DispatchWorkItemFlags.barrier) {
-//
-//            sleep(10)
-//
-//        }
-    
-//        DispatchQueue.global().async(flags: DispatchWorkItemFlags.barrier) {
-//            print(2)
-//            self.ShowInfo()
-//        }
-    
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: 3)) {
-//             self.ShowInfo()
-//        }
-        
-//        ShowInfo()
-        */
-        
-//        if !compareTime() {
-//            self.logging("时间都过了,还来干吗")
-//            return
-//        }
-        let queque = DispatchQueue(label: "com.gy")
-        
-        queque.async {
-            GYNetWorking.default.requestJson(GYRouter.tokenLogin(parameters: ["loginUserDTO.user_name":"745756619@qq.com","":""]), sucess: { (data) in
-                let dataObj = data["data"] as? [String:AnyObject]
-                if dataObj != nil {
-                    signUrl = dataObj?["cpServer"] as? String ?? signUrl
-                    self.logging("登录成功")
-                } else {
-                    sleep(1)
-                    self.tokenLogin()
-                    self.logging("登录失败")
-                }
-                
-            }) { (error) in
-                sleep(1)
-                self.tokenLogin()
-                self.logging("登录失败")
-            }
-            
-        }
-        
-        queque.async {
 
-            self.ShowInfo()
-        }
-        
-        
-    }
-
-    
     func tokenLogin() {
         
         GYNetWorking.default.requestJson(GYRouter.tokenLogin(parameters: ["deviceInfo":["platform": "ios", "version":"10.3.3", "manufactor":"apple"]]), sucess: { (data) in

@@ -15,6 +15,7 @@
 
 import Alamofire
 import SwiftyJSON
+import PromiseKit
 
 public func Print<T>(_ message: T,file: String = #file,method: String = #function, line: Int = #line)
 {
@@ -23,7 +24,39 @@ public func Print<T>(_ message: T,file: String = #file,method: String = #functio
     #endif
 }
 
-typealias AlamofireManager = Alamofire.SessionManager
+let serverTrustPolicies: [String: ServerTrustPolicy] = ["kyfw.12306.cn": ServerTrustPolicy.performDefaultEvaluation(validateHost: true)]
+
+// Create custom manager
+let headers = [
+    "refer": "https://kyfw.12306.cn/otn/leftTicket/init",
+    "Host": "kyfw.12306.cn",
+    "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:36.0) Gecko/20100101 Firefox/36.0",
+    "Connection" : "keep-alive"]
+
+
+
+var  AlamofireManager:Alamofire.SessionManager = {
+    // Create the server trust policies
+    let serverTrustPolicies: [String: ServerTrustPolicy] = ["kyfw.12306.cn": ServerTrustPolicy.performDefaultEvaluation(validateHost: true)]
+    
+    // Create custom manager
+    let headers = [
+        "refer": "https://kyfw.12306.cn/otn/leftTicket/init",
+        "Host": "kyfw.12306.cn",
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:36.0) Gecko/20100101 Firefox/36.0",
+        "Connection" : "keep-alive"]
+    let configuration = URLSessionConfiguration.default
+    
+    configuration.httpCookieAcceptPolicy = .always
+    configuration.httpAdditionalHeaders = headers
+    configuration.timeoutIntervalForRequest = 10
+    
+    let manager = Alamofire.SessionManager(
+        configuration: configuration,
+        serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
+    )
+    return manager
+}()
 
 enum GYNetWorkStatus {
     
@@ -50,6 +83,7 @@ enum GYRequestSerializer {
 }
 
 typealias GYHttpRequestSuccess = (AnyObject) -> Void
+typealias GYHttpRequestSuccessData = (Data) -> Void
 
 typealias GYHttpRequestFailed = (Error) -> Void
 
@@ -111,12 +145,70 @@ extension GYNetWorking {
     }
 }
 
+extension GYNetWorking {
+    
+    func preLoginFlow(success:@escaping (NSImage)->Void,failure:@escaping (NSError)->Void){
+        loginInit().then{dynamicJs -> Promise<Void> in
+            return self.requestDynamicJs(dynamicJs, referHeader: ["refer": "https://kyfw.12306.cn/otn/login/init"])
+            }.then{_ -> Promise<NSImage> in
+                return self.getPassCodeNewForLogin()
+            }.then{ image in
+                success(image)
+            }.catch { error in
+                failure(error as NSError)
+        }
+    }
+    
+//    func loginInit()->Promise<String>{
+//        return Promise{ fulfill, reject in
+//            let url = "https://kyfw.12306.cn/otn/login/init"
+//            let headers = ["refer": "https://kyfw.12306.cn/otn/leftTicket/init"]
+//            AlamofireManager.request(url, headers:headers).responseString(completionHandler:{response in
+//                switch (response.result){
+//                case .failure(let error):
+//                    reject(error)
+//                case .success(let content):
+//                    var dynamicJs = ""
+//                    if let matches = Regex("src=\"/otn/dynamicJs/([^\"]+)\"").getMatches(content){
+//                        dynamicJs = matches[0][0]
+//                    }
+//                    else{
+//                       print("fail to get dynamicJs:\(content)")
+//                    }
+//                    
+//                    self.getConfigFromInitContent(content)
+//                    
+//                    fulfill(dynamicJs)
+//                }})
+//        }
+//    }
+    
+}
+
 
 // MARK: - 网络请求
 extension GYNetWorking {
     
     
+  func requestData(_ urlRequest: URLRequestConvertible, sucess:@escaping GYHttpRequestSuccessData,failure: @escaping GYHttpRequestFailed) {
     
+    let responseJSON: (DataResponse<Data>) -> Void = { [weak self]  (response:DataResponse<Data>) in
+        switch response.result {
+        case .success(let data):
+            sucess(data)
+            break
+        default:
+            break
+        }
+    }
+    
+    let manager = AlamofireManager
+    //        此处设置超时无效
+    //                manager.session.configuration.timeoutIntervalForRequest = 3
+    let dataRequest =  manager.request(urlRequest)
+        .responseData(queue: nil, completionHandler: responseJSON)
+        
+    }
     /// 自动校验 返回Json格式
     ///
     /// - Parameters:
@@ -145,7 +237,7 @@ extension GYNetWorking {
         
         task?.cancel()
 
-        let manager = AlamofireManager.default
+        let manager = AlamofireManager
         //        此处设置超时无效
 //                manager.session.configuration.timeoutIntervalForRequest = 3
         let dataRequest =  manager.request(urlRequest)
