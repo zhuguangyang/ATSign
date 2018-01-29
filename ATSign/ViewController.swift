@@ -71,10 +71,18 @@ class ViewController: NSViewController {
 //        ShowInfo()
         */
         
+//        if load() == "下午" {
+//            let arcodm = Int(arc4random())%5
+//            let sleepTime = [0,60,120,180,240,320][arcodm]
+////            sleep(UInt32(sleepTime))
+//            Thread.sleep(forTimeInterval: TimeInterval(sleepTime))
+//        }
+
         if !compareTime() {
             self.logging("时间都过了,还来干吗")
             return
         }
+        
         let queque = DispatchQueue(label: "com.gy")
         
         queque.async {
